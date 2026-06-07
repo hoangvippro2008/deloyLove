@@ -1,0 +1,2190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --background: #070817;
+  --foreground: #f8fbff;
+  --cosmic-void: #070817;
+  --cosmic-rose: #ff5ea8;
+  --cosmic-violet: #8b5cf6;
+  --cosmic-cyan: #67e8f9;
+  --cosmic-muted: #d9c8ff;
+  --font-ui: var(--font-sans), "Segoe UI", Roboto, system-ui, -apple-system, BlinkMacSystemFont, Arial,
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5, 7, 20, 0.66), rgba(5, 7, 20, 0.93)),
+    radial-gradient(circle at 18% 20%, rgba(244, 143, 177, 0.16), transparent 30%),
+    radial-gradient(circle at 78% 22%, rgba(125, 211, 252, 0.12), transparent 34%),
+    url("/images/galaxy-hero-bg.png") center / cover no-repeat,
+    var(--background);
+  content: "";
+  transform: scale(1.04);
+  transform-origin: center;
+  animation: photoDrift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label {
+  letter-spacing: 0;
+}
+
+* {
+  scrollbar-color: rgba(148, 163, 184, 0.42) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.42);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(203, 213, 225, 0.62);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@layer components {
+  .only-surface {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.68);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 251, 0.78)),
+      linear-gradient(135deg, rgba(255, 218, 231, 0.18), rgba(226, 235, 255, 0.2));
+    box-shadow:
+      0 24px 80px rgba(104, 73, 91, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(18px);
+  }
+
+  .only-surface::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.72), transparent 34%),
+      radial-gradient(120% 80% at 100% 0%, rgba(226, 214, 255, 0.26), transparent 56%);
+    content: "";
+  }
+
+  .only-surface > * {
+    position: relative;
+  }
+
+  .only-card {
+    border: 1px solid rgba(234, 218, 227, 0.6);
+    background: rgba(255, 255, 255, 0.64);
+    box-shadow:
+      0 16px 46px rgba(103, 77, 92, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.74);
+    backdrop-filter: blur(14px);
+  }
+
+  .only-soft-card {
+    background: linear-gradient(145deg, rgba(255, 249, 252, 0.9), rgba(247, 242, 255, 0.74));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  }
+
+  .only-field {
+    min-height: 3.25rem;
+    width: 100%;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(224, 203, 214, 0.78);
+    background: rgba(255, 255, 255, 0.78);
+    padding: 0 1rem;
+    color: #302733;
+    font-size: 15px;
+    font-weight: 700;
+    outline: none;
+    transition:
+      border-color 180ms ease,
+      background-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  }
+
+  .only-field::placeholder {
+    color: rgba(137, 119, 130, 0.7);
+  }
+
+  .only-field:hover {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .only-field:focus {
+    border-color: rgba(176, 122, 154, 0.7);
+    background: #fff;
+    box-shadow:
+      0 0 0 4px rgba(245, 210, 226, 0.62),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .only-button-primary,
+  .only-button-secondary {
+    display: inline-flex;
+    min-height: 2.9rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease;
+  }
+
+  .only-button-primary {
+    border: 0;
+    background: linear-gradient(135deg, #302733, #6f5a86);
+    color: #fff;
+    box-shadow: 0 16px 36px rgba(75, 56, 88, 0.18);
+  }
+
+  .only-button-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 20px 44px rgba(75, 56, 88, 0.22);
+  }
+
+  .only-button-secondary {
+    border: 1px solid rgba(226, 207, 218, 0.82);
+    background: rgba(255, 255, 255, 0.7);
+    color: #564653;
+    box-shadow: 0 10px 28px rgba(104, 73, 91, 0.08);
+  }
+
+  .only-button-secondary:hover {
+    transform: translateY(-1px);
+    border-color: rgba(201, 151, 176, 0.74);
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .only-button-primary:disabled,
+  .only-button-secondary:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .only-icon-bubble {
+    display: grid;
+    place-items: center;
+    border-radius: 1.125rem;
+    background: linear-gradient(145deg, rgba(255, 236, 243, 0.94), rgba(238, 233, 255, 0.86));
+    color: #9d6681;
+    box-shadow:
+      0 12px 28px rgba(121, 82, 103, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  }
+
+  .only-empty {
+    border-radius: 1.75rem;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(250, 245, 255, 0.72)),
+      repeating-linear-gradient(135deg, rgba(174, 141, 184, 0.06) 0 1px, transparent 1px 13px);
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  }
+
+  .only-modal-backdrop {
+    background:
+      linear-gradient(135deg, rgba(43, 36, 48, 0.28), rgba(94, 72, 104, 0.18)),
+      rgba(255, 248, 251, 0.22);
+    backdrop-filter: blur(16px);
+  }
+
+  .only-modal-card {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 34px 110px rgba(67, 52, 78, 0.24);
+  }
+
+  .only-pop {
+    animation: onlyPop 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+.only-surface::before,
+.cosmic-glass::before {
+  display: none !important;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.cosmic-page-enter {
+  animation: pageEnter 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cosmic-fade-up {
+  animation: fadeUp 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cosmic-fade-in {
+  animation: fadeIn 760ms ease-out both;
+}
+
+.cosmic-panel-enter {
+  animation: panelEnter 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cosmic-float-soft {
+  animation: floatSoft 7s ease-in-out infinite;
+}
+
+.cosmic-hover-lift {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.cosmic-hover-lift:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.26);
+}
+
+.cosmic-text-shimmer {
+  color: #f8fbff;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.cosmic-auth-photo {
+  transform: scale(1.04);
+  animation: photoDrift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.cosmic-orbit-glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+  opacity: 0.5;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  animation: orbitGlow 18s ease-in-out infinite alternate;
+}
+
+.cosmic-aurora {
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 122, 182, 0.18), transparent 28%),
+    radial-gradient(circle at 82% 22%, rgba(110, 231, 249, 0.16), transparent 30%),
+    radial-gradient(circle at 56% 82%, rgba(247, 198, 111, 0.1), transparent 26%);
+  opacity: 0.78;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  animation: auroraDrift 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.cosmic-stars,
+.cosmic-stars::before,
+.cosmic-stars::after {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.78) 1px, transparent 1px),
+    radial-gradient(circle, rgba(110, 231, 249, 0.6) 1px, transparent 1px);
+  background-position:
+    0 0,
+    34px 42px;
+  background-size:
+    120px 120px,
+    180px 180px;
+  content: "";
+}
+
+.cosmic-stars {
+  opacity: 0.5;
+  animation: starDrift 44s linear infinite;
+}
+
+.cosmic-stars::before {
+  opacity: 0.34;
+  transform: scale(1.35);
+  animation: starDrift 70s linear infinite reverse;
+}
+
+.cosmic-stars::after {
+  opacity: 0.2;
+  transform: scale(1.9);
+}
+
+.cosmic-fall-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cosmic-fall {
+  position: absolute;
+  top: -8vh;
+  left: var(--fall-left);
+  width: var(--fall-size);
+  height: calc(var(--fall-size) * 1.45);
+  border-radius: 999px 999px 999px 0;
+  background:
+    radial-gradient(circle at 38% 28%, rgba(255, 255, 255, 0.92), transparent 19%),
+    linear-gradient(145deg, rgba(255, 122, 182, 0.92), rgba(110, 231, 249, 0.42));
+  box-shadow:
+    0 0 18px rgba(255, 122, 182, 0.26),
+    0 0 28px rgba(110, 231, 249, 0.14);
+  opacity: var(--fall-opacity);
+  transform: translate3d(0, -12vh, 0) rotate(38deg);
+  animation: cosmicFall var(--fall-duration) linear infinite;
+  animation-delay: var(--fall-delay);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes onlyPop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes panelEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes textShimmer {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+}
+
+@keyframes photoDrift {
+  from {
+    transform: scale(1.04) translate3d(-0.8%, -0.4%, 0);
+  }
+
+  to {
+    transform: scale(1.09) translate3d(0.8%, 0.6%, 0);
+  }
+}
+
+@keyframes auroraDrift {
+  from {
+    transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: translate3d(2%, 1%, 0) rotate(3deg) scale(1.04);
+  }
+}
+
+@keyframes orbitGlow {
+  from {
+    transform: translate3d(-10px, 6px, 0) scale(0.96);
+  }
+
+  to {
+    transform: translate3d(10px, -8px, 0) scale(1.04);
+  }
+}
+
+@keyframes starDrift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-120px, 120px, 0);
+  }
+}
+
+@keyframes cosmicFall {
+  0% {
+    transform: translate3d(0, -12vh, 0) rotate(38deg) scale(0.84);
+  }
+
+  48% {
+    transform: translate3d(var(--fall-drift), 48vh, 0) rotate(154deg) scale(1);
+  }
+
+  100% {
+    transform: translate3d(calc(var(--fall-drift) * -0.45), 112vh, 0) rotate(318deg) scale(0.9);
+  }
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.8) rotate(-8deg);
+  }
+
+  18% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(18px, -105vh, 0) scale(1.4) rotate(14deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .cosmic-auth-photo,
+  .cosmic-aurora {
+    animation-duration: 42s;
+  }
+
+  .cosmic-stars,
+  .cosmic-stars::before {
+    animation-duration: 90s;
+  }
+
+  .cosmic-fall:nth-child(n + 13) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-page-enter,
+  .cosmic-fade-up,
+  .cosmic-fade-in,
+  .cosmic-panel-enter,
+  .cosmic-float-soft,
+  .cosmic-text-shimmer,
+  .cosmic-auth-photo,
+  .cosmic-orbit-glow,
+  .cosmic-aurora,
+  .cosmic-stars,
+  .cosmic-stars::before,
+  .cosmic-fall {
+    animation: none;
+  }
+
+  .cosmic-hover-lift,
+  .cosmic-hover-lift:hover {
+    transform: none;
+  }
+}
+
+@layer components {
+  .cosmic-page-shell {
+    position: relative;
+    min-height: 100dvh;
+    color: #f8fbff;
+  }
+
+  .cosmic-glass,
+  .only-surface {
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow:
+      0 24px 90px rgba(7, 8, 23, 0.5),
+      0 0 42px rgba(255, 94, 168, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+
+  .cosmic-card,
+  .only-card {
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    box-shadow:
+      0 16px 50px rgba(7, 8, 23, 0.36),
+      0 0 28px rgba(139, 92, 246, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+    backdrop-filter: blur(14px) !important;
+  }
+
+  .cosmic-soft-card,
+  .only-soft-card {
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(139, 92, 246, 0.09)) !important;
+    color: #f8fbff;
+  }
+
+  .only-field {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+  }
+
+  .only-field::placeholder {
+    color: rgba(217, 200, 255, 0.68) !important;
+  }
+
+  .only-field:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+  }
+
+  .only-field:focus {
+    border-color: rgba(255, 94, 168, 0.72) !important;
+    background: rgba(12, 11, 35, 0.56) !important;
+    box-shadow:
+      0 0 0 4px rgba(255, 94, 168, 0.18),
+      0 0 30px rgba(139, 92, 246, 0.22) !important;
+  }
+
+  .only-button-primary {
+    background: linear-gradient(135deg, #ff4fa3, #8b5cf6 58%, #67e8f9) !important;
+    color: #fff !important;
+    box-shadow: 0 16px 42px rgba(255, 94, 168, 0.28), 0 0 28px rgba(139, 92, 246, 0.22) !important;
+  }
+
+  .only-button-primary:hover {
+    box-shadow: 0 22px 58px rgba(255, 94, 168, 0.34), 0 0 36px rgba(103, 232, 249, 0.18) !important;
+  }
+
+  .only-button-primary:active,
+  .only-button-secondary:active {
+    transform: scale(0.97) !important;
+  }
+
+  .only-button-secondary {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+    color: #f8fbff !important;
+    box-shadow: 0 10px 30px rgba(7, 8, 23, 0.26) !important;
+  }
+
+  .only-button-secondary:hover {
+    border-color: rgba(255, 94, 168, 0.56) !important;
+    background: rgba(255, 255, 255, 0.14) !important;
+    box-shadow: 0 14px 42px rgba(139, 92, 246, 0.2) !important;
+  }
+
+  .only-icon-bubble {
+    background: linear-gradient(145deg, rgba(255, 94, 168, 0.28), rgba(103, 232, 249, 0.16)) !important;
+    color: #fff !important;
+    box-shadow: 0 0 28px rgba(255, 94, 168, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  }
+
+  .only-empty {
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: #f8fbff;
+  }
+
+  .only-modal-backdrop {
+    background: linear-gradient(135deg, rgba(7, 8, 23, 0.72), rgba(53, 31, 88, 0.46)), rgba(7, 8, 23, 0.5) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+
+  .only-modal-card {
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(18, 16, 45, 0.82) !important;
+    color: #f8fbff !important;
+    box-shadow: 0 34px 110px rgba(7, 8, 23, 0.54), 0 0 46px rgba(255, 94, 168, 0.16) !important;
+  }
+}
+
+.text-\[\#302733\], .text-\[\#2f2630\], .text-\[\#312633\], .text-\[\#332634\], .text-\[\#352a35\] {
+  color: #f8fbff !important;
+}
+
+.text-\[\#756672\], .text-\[\#7c6c76\], .text-\[\#7b6d76\], .text-\[\#735f6b\], .text-\[\#8a7a84\], .text-\[\#8b7883\], .text-\[\#766872\], .text-\[\#6f606a\], .text-\[\#675863\], .text-\[\#66545f\], .text-\[\#65545f\], .text-\[\#574955\], .text-\[\#5f5360\], .text-\[\#62545d\], .text-\[\#7d6e79\], .text-\[\#786777\], .text-\[\#7a6b74\] {
+  color: #d9c8ff !important;
+}
+
+.bg-\[\#fff7fb\], .bg-\[\#f8edf2\], .bg-\[\#fff8fb\], .bg-white, .bg-white\/82, .bg-white\/94, .bg-white\/96 {
+  background-color: transparent !important;
+}
+
+.bg-white\/70, .bg-white\/72, .bg-white\/76, .bg-white\/66, .bg-white\/58, .bg-\[\#fff0f6\], .bg-\[\#fff0f4\], .bg-\[\#fff1f6\], .bg-\[\#fff2e8\], .bg-\[\#fff4ea\], .bg-\[\#fffdfd\], .bg-\[\#f7f2f6\], .bg-\[\#f5e9ef\], .bg-\[\#fbf8fb\] {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+.bg-\[\#2f2630\] {
+  background-color: rgba(18, 16, 45, 0.72) !important;
+}
+
+@layer components {
+  .only-surface,
+  .cosmic-glass {
+    border-radius: 28px;
+    border-color: rgba(255, 255, 255, 0.13) !important;
+    background: rgba(14, 16, 38, 0.58) !important;
+    box-shadow:
+      0 18px 58px rgba(3, 6, 18, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .only-card,
+  .cosmic-card {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    background: rgba(18, 20, 46, 0.48) !important;
+    box-shadow: 0 12px 36px rgba(3, 6, 18, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.09) !important;
+  }
+
+  .only-soft-card,
+  .cosmic-soft-card {
+    background: rgba(255, 255, 255, 0.07) !important;
+  }
+
+  .only-button-primary {
+    background: linear-gradient(135deg, #f08ab7, #9c7ee8 58%, #78cfe1) !important;
+    box-shadow: 0 14px 34px rgba(156, 126, 232, 0.2) !important;
+  }
+
+  .only-button-secondary {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    color: #f4efff !important;
+  }
+
+  .only-button-secondary:hover,
+  .only-button-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 38px rgba(156, 126, 232, 0.22) !important;
+  }
+
+  .only-field {
+    min-height: 3rem;
+    border-radius: 18px;
+    background: rgba(8, 10, 28, 0.42) !important;
+    color: #fffaf7 !important;
+  }
+
+  .only-field::placeholder {
+    color: rgba(223, 214, 247, 0.78) !important;
+  }
+
+  .only-icon-bubble {
+    background: rgba(255, 255, 255, 0.09) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 28px rgba(3, 6, 18, 0.18) !important;
+  }
+
+  .only-empty {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+}
+
+.text-\[\#b85f82\], .text-\[\#a45776\], .text-\[\#9a6a82\], .text-\[\#a77786\], .text-\[\#85445f\] {
+  color: #f7a8ca !important;
+}
+
+.text-\[\#7460a8\], .text-\[\#a274bf\], .text-\[\#6e4ca1\], .text-\[\#9d7ec4\] {
+  color: #c7b7ff !important;
+}
+
+select.only-field option {
+  background: #10122c;
+  color: #fffaf7;
+}
+
+/* v2 polish: calm dark glass, less white bloom, smaller radii. Keep last. */
+@layer components {
+  .only-surface,
+  .cosmic-glass {
+    overflow: hidden;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background:
+      linear-gradient(180deg, rgba(18, 20, 44, 0.74), rgba(10, 12, 29, 0.66)) !important;
+    box-shadow:
+      0 18px 46px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    backdrop-filter: blur(14px) saturate(122%) !important;
+  }
+
+  .only-card,
+  .cosmic-card,
+  .only-soft-card,
+  .cosmic-soft-card {
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    background: rgba(255, 255, 255, 0.055) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  .only-empty {
+    border-radius: 16px !important;
+    border: 1px dashed rgba(255, 255, 255, 0.13) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+    color: #fffaf7 !important;
+  }
+
+  .only-field {
+    min-height: 46px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    background: rgba(7, 9, 24, 0.48) !important;
+    color: #fffaf7 !important;
+    font-weight: 650 !important;
+    box-shadow: none !important;
+  }
+
+  textarea.only-field {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .only-field::placeholder {
+    color: rgba(224, 216, 245, 0.68) !important;
+  }
+
+  .only-field:focus {
+    border-color: rgba(244, 168, 201, 0.62) !important;
+    background: rgba(9, 11, 30, 0.72) !important;
+    box-shadow: 0 0 0 3px rgba(244, 168, 201, 0.14) !important;
+  }
+
+  .only-button-primary,
+  .only-button-secondary {
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    padding-inline: 1rem !important;
+    font-weight: 800 !important;
+  }
+
+  .only-button-primary {
+    background: linear-gradient(135deg, #e989b6, #9279d8 62%, #6fc8d8) !important;
+    color: #fff !important;
+    box-shadow: 0 12px 28px rgba(132, 108, 216, 0.18) !important;
+  }
+
+  .only-button-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.13) !important;
+    background: rgba(255, 255, 255, 0.065) !important;
+    color: #fffaf7 !important;
+    box-shadow: none !important;
+  }
+
+  .only-button-primary:hover,
+  .only-button-secondary:hover {
+    transform: translateY(-1px) !important;
+    border-color: rgba(244, 168, 201, 0.28) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  .only-icon-bubble {
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, 0.075) !important;
+    color: #f4a8c9 !important;
+    box-shadow: none !important;
+  }
+
+  .only-modal-card {
+    border-radius: 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: rgba(14, 16, 38, 0.92) !important;
+    color: #fffaf7 !important;
+  }
+}
+
+.bg-white,
+.bg-white\/70,
+.bg-white\/72,
+.bg-white\/76,
+.bg-white\/82,
+.bg-white\/94,
+.bg-white\/96 {
+  background-color: rgba(255, 255, 255, 0.055) !important;
+}
+
+.text-\[\#302733\],
+.text-\[\#2f2630\],
+.text-\[\#312633\],
+.text-\[\#332634\],
+.text-\[\#352a35\] {
+  color: #fffaf7 !important;
+}
+
+.text-\[\#756672\],
+.text-\[\#7c6c76\],
+.text-\[\#7b6d76\],
+.text-\[\#735f6b\],
+.text-\[\#8a7a84\],
+.text-\[\#8b7883\],
+.text-\[\#766872\],
+.text-\[\#6f606a\],
+.text-\[\#675863\],
+.text-\[\#66545f\],
+.text-\[\#65545f\],
+.text-\[\#574955\],
+.text-\[\#5f5360\],
+.text-\[\#62545d\],
+.text-\[\#7d6e79\],
+.text-\[\#786777\],
+.text-\[\#7a6b74\] {
+  color: #d9c8ff !important;
+}
+
+@media (max-width: 640px) {
+  .only-surface,
+  .cosmic-glass {
+    border-radius: 16px !important;
+  }
+
+  .only-card,
+  .cosmic-card,
+  .only-soft-card,
+  .cosmic-soft-card,
+  .only-empty {
+    border-radius: 14px !important;
+  }
+}
+
+/* Schedule-X calendar polish */
+.couple-calendar-shell {
+  --sx-color-background: rgba(10, 12, 29, 0.55);
+  --sx-color-surface: rgba(14, 16, 38, 0.62);
+  --sx-color-surface-container: rgba(14, 16, 38, 0.62);
+  --sx-color-surface-container-high: rgba(20, 22, 48, 0.78);
+  --sx-color-on-surface: #fffaf7;
+  --sx-color-on-background: #fffaf7;
+  --sx-color-outline: rgba(255, 255, 255, 0.08);
+  --sx-color-outline-variant: rgba(255, 255, 255, 0.06);
+  --sx-color-primary: #f4a8c9;
+  --sx-color-on-primary: #1a0a16;
+  --sx-color-primary-container: rgba(244, 168, 201, 0.18);
+  --sx-color-on-primary-container: #ffe4ef;
+  --sx-color-secondary-container: rgba(139, 92, 246, 0.22);
+  --sx-color-on-secondary-container: #efe6ff;
+  --sx-color-tertiary-container: rgba(103, 232, 249, 0.16);
+  --sx-color-on-tertiary-container: #defcff;
+  --sx-internal-color-text: #fffaf7;
+  --sx-internal-color-text-muted: #d9c8ff;
+  color: #fffaf7;
+}
+
+.couple-calendar-shell .sx-react-calendar-wrapper,
+.couple-calendar-shell .sx__calendar {
+  border: 0 !important;
+  background: transparent !important;
+  color: #fffaf7 !important;
+  font-family: var(--font-ui) !important;
+}
+
+.couple-calendar-shell .sx__date-grid,
+.couple-calendar-shell .sx__week-grid,
+.couple-calendar-shell .sx__time-grid {
+  background: transparent !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day,
+.couple-calendar-shell .sx__date-grid-day,
+.couple-calendar-shell .sx__week-grid__day {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  background: rgba(255, 255, 255, 0.025) !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day:hover,
+.couple-calendar-shell .sx__date-grid-day:hover {
+  background: rgba(244, 168, 201, 0.08) !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day--today,
+.couple-calendar-shell .sx__date-grid-day--today {
+  outline: 1px solid rgba(244, 168, 201, 0.55) !important;
+  background: rgba(244, 168, 201, 0.08) !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day__header-day-name,
+.couple-calendar-shell .sx__week-grid__date-number,
+.couple-calendar-shell .sx__date-grid__day-name {
+  color: #d9c8ff !important;
+  font-weight: 700;
+}
+
+.couple-calendar-shell .sx__week-grid__hour,
+.couple-calendar-shell .sx__time-grid-hour {
+  color: rgba(217, 200, 255, 0.7) !important;
+}
+
+.couple-calendar-shell .sx__chevron-wrapper,
+.couple-calendar-shell .sx__view-selection-selected-item,
+.couple-calendar-shell .sx__view-selection-item,
+.couple-calendar-shell .sx__today-button,
+.couple-calendar-shell .sx__forward-backward-navigation button {
+  color: #fffaf7 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+.couple-calendar-shell .sx__today-button:hover,
+.couple-calendar-shell .sx__view-selection-item:hover,
+.couple-calendar-shell .sx__chevron-wrapper:hover {
+  background: rgba(244, 168, 201, 0.16) !important;
+}
+
+.couple-calendar-shell .sx__view-selection-items {
+  background: rgba(14, 16, 38, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.couple-calendar-shell .sx__range-heading {
+  color: #fffaf7 !important;
+  font-weight: 800;
+}
+
+.couple-calendar-shell .sx__event {
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18) !important;
+}
+
+.couple-calendar-shell .sx__time-indicator,
+.couple-calendar-shell .sx__time-indicator-bullet {
+  background: #ff5ea8 !important;
+}
+
+.couple-calendar-shell .sx__month-agenda-event {
+  border-radius: 10px !important;
+}
+
+/* ---- Lịch: tinh chỉnh cho gọn gàng ---- */
+.couple-calendar-shell { padding: 6px !important; }
+
+/* Cao theo nội dung: hàng gọn lại, không còn ô cao trống trải */
+.couple-calendar-shell .sx-react-calendar-wrapper,
+.couple-calendar-shell .sx__calendar,
+.couple-calendar-shell .sx__month-grid-wrapper { height: auto !important; }
+.couple-calendar-shell .sx__month-grid-week {
+  flex: 0 0 auto !important;
+  min-height: 74px !important;
+  border-top-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Ô ngày: số căn trái-trên, padding gọn */
+.couple-calendar-shell .sx__month-grid-day { padding: 5px 0 7px !important; }
+.couple-calendar-shell .sx__month-grid-day__header {
+  align-items: flex-start !important;
+  padding: 0 9px !important;
+}
+.couple-calendar-shell .sx__month-grid-day__header-date {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  height: 22px !important;
+  width: 22px !important;
+  margin-bottom: 3px !important;
+}
+.couple-calendar-shell .sx__month-grid-day__header-date.sx__is-today {
+  background: var(--ui-accent) !important;
+  color: #1a0a16 !important;
+}
+/* "Thứ" tách thành dải header riêng phía trên hàng ngày đầu tiên */
+.couple-calendar-shell .sx__month-grid-week:first-child {
+  position: relative;
+  padding-top: 30px !important;
+  min-height: 104px !important;
+}
+.couple-calendar-shell .sx__month-grid-day__header-day-name {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  right: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 9px;
+  margin: 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: var(--ui-text-soft) !important;
+  background: rgba(255, 255, 255, 0.035);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* Sự kiện: pill nhỏ gọn, bỏ bóng nặng */
+.couple-calendar-shell .sx__month-grid-day__events {
+  grid-gap: 3px !important;
+  padding: 0 6px !important;
+}
+.couple-calendar-shell .sx__month-grid-event,
+.couple-calendar-shell .sx__event {
+  min-height: 19px !important;
+  padding: 1px 7px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+.couple-calendar-shell .sx__month-grid-event-time { margin-right: 3px !important; opacity: 0.82; }
+
+/* Thanh điều hướng + ô chọn ngày gọn lại */
+.couple-calendar-shell .sx__today-button,
+.couple-calendar-shell .sx__date-input {
+  height: 36px !important;
+  min-height: 36px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+}
+.couple-calendar-shell .sx__chevron-wrapper {
+  height: 38px !important;
+  width: 38px !important;
+  min-height: 38px !important;
+  min-width: 38px !important;
+  font-size: 0 !important; /* giữ ẩn chữ "Prev"/"Next" mặc định của schedule-x */
+  border-radius: 10px !important;
+}
+.couple-calendar-shell .sx__range-heading { font-size: 16px !important; }
+
+/* ---------------- UI tokens v3 (đồ án): scale + tone calm ---------------- */
+:root {
+  /* Nguồn token DUY NHẤT — khớp với giá trị v8 đang dùng (sửa 1 chỗ, cả app theo) */
+  --ui-radius-lg: 12px;
+  --ui-radius-md: 10px;
+  --ui-radius-sm: 8px;
+  --ui-radius-pill: 999px;
+  --ui-pad-section: 24px;
+  --ui-pad-card: 18px;
+  --ui-text: #f6f3ff;
+  --ui-text-muted: #dccff2;
+  --ui-text-soft: #9c93b6;
+  --ui-accent: #ff9ecf;
+  --ui-accent-soft: rgba(240, 164, 196, 0.16);
+  --ui-ok: #86efac;
+  --ui-border: rgba(255, 255, 255, 0.08);
+  --ui-border-strong: rgba(255, 255, 255, 0.14);
+  --ui-bg-section: rgba(14, 16, 36, 0.62);
+  --ui-bg-card: rgba(255, 255, 255, 0.045);
+  --ui-bg-deep: #0a0b1e;
+  --cosmic-rose: #ff8ac4;
+  --cosmic-muted: #ead9ff;
+}
+
+.ui-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ui-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ui-h1 {
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--ui-text);
+  letter-spacing: -0.005em;
+}
+
+.ui-h2 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ui-text);
+}
+
+.ui-h3 {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--ui-text);
+}
+
+.ui-body {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--ui-text-muted);
+}
+
+.ui-caption {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ui-text-soft);
+}
+
+.ui-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--ui-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ui-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ui-section {
+  border-radius: var(--ui-radius-lg);
+  border: 1px solid var(--ui-border-strong);
+  background: var(--ui-bg-section);
+  padding: var(--ui-pad-section);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+}
+
+.ui-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.ui-section-head__title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ui-card {
+  border-radius: var(--ui-radius-md);
+  border: 1px solid var(--ui-border);
+  background: var(--ui-bg-card);
+  padding: var(--ui-pad-card);
+}
+
+.ui-divider {
+  height: 1px;
+  background: var(--ui-border);
+  border: 0;
+}
+
+.ui-stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ui-text);
+  line-height: 1.1;
+}
+
+.ui-stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ui-text-soft);
+}
+
+/* Calm toggle: bớt sparkle/wibu cho dashboard */
+.cosmic-page-shell .cosmic-aurora {
+  opacity: 0.32;
+}
+
+.cosmic-page-shell .cosmic-stars {
+  opacity: 0.22;
+}
+
+.cosmic-page-shell .cosmic-fall-layer {
+  display: none; /* tắt mưa hiệu ứng trong dashboard cho đỡ ồn */
+}
+
+@media (max-width: 640px) {
+  :root {
+    --ui-pad-section: 18px;
+    --ui-pad-card: 15px;
+    --ui-radius-lg: 14px;
+    --ui-radius-md: 12px;
+  }
+}
+
+/* ---------------- A11y: focus bàn phím hiển thị rõ (đòn bẩy chung toàn app) ---------------- */
+@layer components {
+  .only-button-primary:focus-visible,
+  .only-button-secondary:focus-visible,
+  .only-field:focus-visible,
+  .ui-pill:focus-visible {
+    outline: 2px solid var(--cosmic-cyan) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(103, 232, 249, 0.32) !important;
+  }
+}
+
+/* Fallback ring cho mọi phần tử tương tác chưa có ring riêng (specificity thấp, không đè rule trên) */
+:where(a[href], button, [role="button"], summary, input, select, textarea, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--cosmic-cyan);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* ===================================================================
+   v4 — Soft & Cute Cosmic: mềm mại, đáng yêu, vẫn đúng chủ đề tình yêu vũ trụ.
+   Đặt CUỐI file để thắng cascade. Chỉ đổi cảm giác (bo góc / glow / nhịp),
+   KHÔNG đổi layout.
+   =================================================================== */
+@layer components {
+  /* Bề mặt kính: bo tròn hơn, viền hồng-lavender dịu, quầng sáng mềm thay bóng cứng */
+  .only-surface,
+  .cosmic-glass {
+    border-radius: 26px !important;
+    border: 1px solid rgba(255, 209, 233, 0.16) !important;
+    background:
+      radial-gradient(135% 120% at 0% 0%, rgba(255, 138, 196, 0.1), transparent 55%),
+      radial-gradient(120% 120% at 100% 0%, rgba(150, 130, 246, 0.1), transparent 52%),
+      linear-gradient(180deg, rgba(26, 22, 52, 0.72), rgba(15, 13, 35, 0.66)) !important;
+    box-shadow:
+      0 22px 60px rgba(10, 6, 26, 0.32),
+      0 0 48px rgba(255, 138, 196, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    backdrop-filter: blur(18px) saturate(116%) !important;
+  }
+
+  .only-card,
+  .cosmic-card,
+  .only-soft-card,
+  .cosmic-soft-card {
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 209, 233, 0.12) !important;
+    background: rgba(255, 245, 250, 0.05) !important;
+    box-shadow:
+      0 12px 32px rgba(10, 6, 26, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .only-empty {
+    border-radius: 22px !important;
+    border: 1.5px dashed rgba(255, 184, 217, 0.22) !important;
+    background: rgba(255, 240, 247, 0.04) !important;
+  }
+
+  /* Ô nhập: tròn mềm, focus phát sáng hồng dịu */
+  .only-field {
+    min-height: 48px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 214, 235, 0.16) !important;
+    background: rgba(12, 11, 32, 0.42) !important;
+    font-weight: 600 !important;
+    transition:
+      border-color 220ms ease,
+      box-shadow 260ms ease,
+      background-color 220ms ease !important;
+  }
+
+  .only-field:focus {
+    border-color: rgba(255, 150, 200, 0.6) !important;
+    background: rgba(17, 14, 40, 0.62) !important;
+    box-shadow:
+      0 0 0 4px rgba(255, 150, 200, 0.14),
+      0 10px 30px rgba(255, 138, 196, 0.12) !important;
+  }
+
+  /* Nút: dáng viên thuốc mềm, gradient pastel ấm, glow dịu, nhấn nảy nhẹ */
+  .only-button-primary,
+  .only-button-secondary {
+    min-height: 46px !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    transition:
+      transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 260ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease !important;
+  }
+
+  .only-button-primary {
+    border: 0 !important;
+    background: linear-gradient(135deg, #ff9ecf 0%, #caa0f2 52%, #95d8f1 100%) !important;
+    color: #34173b !important;
+    box-shadow:
+      0 12px 30px rgba(255, 138, 196, 0.26),
+      0 0 22px rgba(167, 139, 250, 0.16) !important;
+  }
+
+  .only-button-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow:
+      0 18px 42px rgba(255, 138, 196, 0.32),
+      0 0 30px rgba(149, 216, 241, 0.2) !important;
+  }
+
+  .only-button-secondary {
+    border: 1px solid rgba(255, 214, 235, 0.18) !important;
+    background: rgba(255, 245, 250, 0.07) !important;
+    color: #fdeffa !important;
+    box-shadow: none !important;
+  }
+
+  .only-button-secondary:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 150, 200, 0.4) !important;
+    background: rgba(255, 245, 250, 0.12) !important;
+  }
+
+  .only-button-primary:active,
+  .only-button-secondary:active {
+    transform: scale(0.96) !important;
+  }
+
+  .only-icon-bubble {
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, rgba(255, 158, 207, 0.2), rgba(149, 216, 241, 0.12)) !important;
+    color: #ffd9ec !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  }
+
+  /* Modal: bo tròn, nền có quầng hồng dịu trên đỉnh */
+  .only-modal-card {
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 209, 233, 0.16) !important;
+    background:
+      radial-gradient(120% 80% at 50% 0%, rgba(255, 138, 196, 0.12), transparent 60%),
+      rgba(16, 14, 38, 0.95) !important;
+    box-shadow:
+      0 30px 90px rgba(8, 5, 22, 0.6),
+      0 0 50px rgba(255, 138, 196, 0.14) !important;
+  }
+
+  .only-modal-backdrop {
+    background: linear-gradient(135deg, rgba(12, 8, 30, 0.66), rgba(42, 25, 72, 0.42)) !important;
+    backdrop-filter: blur(14px) !important;
+  }
+
+  /* Token ui-* trong dashboard: bo tròn + viền hồng dịu cho đồng bộ */
+  .ui-section {
+    border-radius: 22px !important;
+    border-color: rgba(255, 209, 233, 0.12) !important;
+  }
+
+  .ui-card {
+    border-radius: 18px !important;
+    border-color: rgba(255, 209, 233, 0.1) !important;
+  }
+
+  .ui-pill {
+    border-radius: 999px !important;
+    border-color: rgba(255, 209, 233, 0.16) !important;
+  }
+}
+
+/* Nhịp chuyển động mềm hơn: hover nhấc nhẹ, modal bung dịu */
+.cosmic-hover-lift {
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms ease,
+    border-color 320ms ease;
+}
+
+.cosmic-hover-lift:hover {
+  transform: translate3d(0, -4px, 0);
+  box-shadow:
+    0 22px 60px rgba(255, 138, 196, 0.14),
+    0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.only-pop {
+  animation: onlyPopSoft 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes onlyPopSoft {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Quầng sáng vũ trụ rất dịu phủ toàn nền (đáng yêu, không ồn) */
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(42% 32% at 12% 10%, rgba(255, 138, 196, 0.12), transparent 60%),
+    radial-gradient(40% 30% at 88% 16%, rgba(149, 216, 241, 0.1), transparent 60%),
+    radial-gradient(52% 42% at 50% 102%, rgba(167, 139, 250, 0.12), transparent 60%);
+  opacity: 0.85;
+  animation: softGlow 18s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+@keyframes softGlow {
+  from {
+    opacity: 0.66;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0.95;
+    transform: translate3d(0, -1.2%, 0) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+  }
+}
+
+/* ===================================================================
+   Hiệu ứng nền vũ trụ ĐẦY ĐỦ (component CosmicBackground)
+   fall (hạt rơi) · sparkle (bụi lấp lánh) · shooting-star (sao băng) · heart (tim bay)
+   Mount 1 lần ở root layout: fixed, z-index -1 (galaxy -3 < glow -2 < hiệu ứng -1 < nội dung 0).
+   =================================================================== */
+.cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cosmic-sparkle {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 214, 236, 0.7) 42%, transparent 72%);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  animation-name: sparkleTwinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: opacity, transform;
+}
+
+@keyframes sparkleTwinkle {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+}
+
+.cosmic-shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow:
+    0 0 10px 2px rgba(255, 255, 255, 0.8),
+    0 0 22px 6px rgba(255, 138, 196, 0.35);
+  opacity: 0;
+  animation-name: shootingStar;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.cosmic-shooting-star::after {
+  position: absolute;
+  top: 50%;
+  right: 3px;
+  width: 140px;
+  height: 1.5px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.85), rgba(255, 138, 196, 0.3), transparent);
+  content: "";
+}
+
+@keyframes shootingStar {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(20deg) scaleX(0.2);
+  }
+
+  6% {
+    opacity: 1;
+  }
+
+  26% {
+    opacity: 1;
+    transform: translate3d(-280px, 165px, 0) rotate(20deg) scaleX(1);
+  }
+
+  40%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-360px, 212px, 0) rotate(20deg) scaleX(1);
+  }
+}
+
+.cosmic-heart {
+  position: absolute;
+  bottom: -8%;
+  color: #ff8ac1;
+  text-shadow: 0 0 10px rgba(255, 138, 196, 0.5);
+  animation-name: heartFloat;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+/* Bật hiệu ứng đầy đủ trong dashboard (trước đây bị làm dịu quá tay) */
+.cosmic-page-shell .cosmic-aurora {
+  opacity: 0.55;
+}
+
+.cosmic-page-shell .cosmic-stars {
+  opacity: 0.42;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-sparkle,
+  .cosmic-shooting-star,
+  .cosmic-heart {
+    animation: none;
+  }
+
+  .cosmic-shooting-star {
+    opacity: 0;
+  }
+
+  .cosmic-sparkle {
+    opacity: 0.4;
+  }
+}
+
+/* Giảm tải hiệu ứng trên màn nhỏ cho mượt */
+@media (max-width: 640px) {
+  .cosmic-shooting-star {
+    display: none;
+  }
+}
+
+/* Làm hạt rơi / lấp lánh / tim NỔI RÕ trên nền galaxy đã được làm dịu */
+.cosmic-bg .cosmic-fall {
+  width: var(--fall-size);
+  height: calc(var(--fall-size) * 1.5);
+  background:
+    radial-gradient(circle at 36% 26%, #ffffff 0%, transparent 32%),
+    linear-gradient(145deg, #ff8ac4, #9bd9f2);
+  box-shadow:
+    0 0 16px rgba(255, 138, 196, 0.6),
+    0 0 30px rgba(149, 216, 241, 0.32);
+}
+
+.cosmic-bg .cosmic-sparkle {
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 200, 232, 0.85) 45%, transparent 74%);
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.95),
+    0 0 16px rgba(255, 138, 196, 0.6);
+}
+
+.cosmic-bg .cosmic-heart {
+  color: #ff9ecf;
+  text-shadow: 0 0 14px rgba(255, 138, 196, 0.78);
+}
+
+/* ===================================================================
+   v5 — Nút mềm "candy / jelly" vũ trụ: bớt thô & cứng, mềm mại đáng yêu.
+   Sheen sáng ở trên + đổ bóng trong dịu ở dưới tạo khối mềm; glow toả nhẹ.
+   Đặt CUỐI file để thắng cascade.
+   =================================================================== */
+@layer components {
+  .only-button-primary,
+  .only-button-secondary {
+    position: relative;
+    min-height: 46px !important;
+    border-radius: 999px !important;
+    padding-inline: 1.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em;
+    transition:
+      transform 260ms cubic-bezier(0.34, 1.4, 0.5, 1),
+      box-shadow 280ms ease,
+      filter 220ms ease,
+      background-color 220ms ease,
+      border-color 220ms ease !important;
+  }
+
+  .only-button-primary {
+    border: 0 !important;
+    background: linear-gradient(135deg, #ff9fcb 0%, #c6a3f2 58%, #9ec8f4 100%) !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(86, 24, 72, 0.28);
+    box-shadow:
+      0 10px 24px rgba(255, 138, 196, 0.34),
+      0 2px 6px rgba(139, 92, 246, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -7px 16px rgba(150, 60, 140, 0.2) !important;
+  }
+
+  .only-button-primary:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.05) saturate(1.05);
+    box-shadow:
+      0 16px 34px rgba(255, 138, 196, 0.46),
+      0 4px 10px rgba(139, 92, 246, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.62),
+      inset 0 -7px 16px rgba(150, 60, 140, 0.18) !important;
+  }
+
+  .only-button-secondary {
+    border: 1px solid rgba(255, 205, 232, 0.24) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 200, 230, 0.06)) !important;
+    color: #ffe9f5 !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 6px 18px rgba(10, 6, 26, 0.22) !important;
+    backdrop-filter: blur(6px);
+  }
+
+  .only-button-secondary:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 150, 200, 0.46) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 200, 230, 0.1)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      0 10px 26px rgba(255, 138, 196, 0.22) !important;
+  }
+
+  .only-button-primary:active,
+  .only-button-secondary:active {
+    transform: translateY(0) scale(0.97) !important;
+    filter: none;
+  }
+}
+
+/* ===================================================================
+   v6 — Bo tròn VỪA PHẢI (theo yêu cầu: đừng bo tròn nhiều quá).
+   Giữ pill cho nút & chip nhỏ; bề mặt / thẻ / ô nhập bo nhẹ thôi.
+   =================================================================== */
+@layer components {
+  .only-surface,
+  .cosmic-glass,
+  .ui-section,
+  .only-modal-card {
+    border-radius: 16px !important;
+  }
+
+  .only-card,
+  .cosmic-card,
+  .only-soft-card,
+  .cosmic-soft-card,
+  .ui-card,
+  .only-empty {
+    border-radius: 12px !important;
+  }
+
+  .only-field,
+  textarea.only-field {
+    border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .only-surface,
+  .cosmic-glass,
+  .ui-section,
+  .only-modal-card {
+    border-radius: 14px !important;
+  }
+}
+
+/* ===================================================================
+   Lịch tháng (schedule-x): TÁCH "Thứ" (tên thứ) và "Ngày" (số ngày)
+   trong ô tuần đầu cho rõ — tên thứ thành nhãn nhỏ in hoa có gạch ngăn,
+   số ngày to/đậm bên dưới.
+   =================================================================== */
+.couple-calendar-shell .sx__month-grid-day__header {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 4px !important;
+  padding: 8px 10px 6px !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day__header-day-name {
+  order: -1;
+  width: 100%;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #c9b8f5 !important;
+}
+
+.couple-calendar-shell .sx__month-grid-day__header-date {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #fffaf7 !important;
+}
+
+/* ===================================================================
+   v7 — Hover phát sáng + quét sáng cho nút chính (CTA: Tạo phòng / Gửi...).
+   =================================================================== */
+.only-button-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.only-button-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.38) 50%, transparent 82%);
+  transform: translateX(-130%);
+  transition: transform 650ms ease;
+  pointer-events: none;
+}
+
+.only-button-primary:hover::after {
+  transform: translateX(130%);
+}
+
+.only-button-primary:hover {
+  box-shadow:
+    0 18px 44px rgba(255, 138, 196, 0.5),
+    0 0 38px rgba(199, 160, 242, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .only-button-primary::after {
+    transition: none;
+  }
+}
+
+/* ===================================================================
+   Màu nền theo phòng (CHỈ trong dashboard) — đồng bộ qua backend.
+   Lớp .cosmic-room-wash phủ tông màu dịu lên khu phòng; ngoài phòng giữ nguyên.
+   =================================================================== */
+.cosmic-room-wash {
+  background:
+    radial-gradient(120% 85% at 50% -12%, rgba(139, 92, 246, 0.32), transparent 60%),
+    radial-gradient(95% 70% at 100% 112%, rgba(236, 72, 153, 0.22), transparent 60%),
+    linear-gradient(180deg, rgba(74, 42, 128, 0.2), rgba(34, 18, 60, 0.1));
+}
+
+.cosmic-page-shell[data-room-theme="ocean"] {
+  --ui-accent: #5fd0e6;
+  --ui-accent-soft: rgba(95, 208, 230, 0.16);
+}
+
+.cosmic-page-shell[data-room-theme="ocean"] .cosmic-room-wash {
+  background:
+    radial-gradient(120% 85% at 50% -12%, rgba(56, 189, 248, 0.34), transparent 60%),
+    radial-gradient(95% 70% at 100% 112%, rgba(34, 211, 238, 0.22), transparent 60%),
+    linear-gradient(180deg, rgba(12, 74, 110, 0.24), rgba(8, 47, 73, 0.12));
+}
+
+.cosmic-page-shell[data-room-theme="sunset"] {
+  --ui-accent: #ff9e7a;
+  --ui-accent-soft: rgba(255, 158, 122, 0.16);
+}
+
+.cosmic-page-shell[data-room-theme="sunset"] .cosmic-room-wash {
+  background:
+    radial-gradient(120% 85% at 50% -12%, rgba(255, 138, 101, 0.32), transparent 60%),
+    radial-gradient(95% 70% at 100% 112%, rgba(255, 94, 168, 0.24), transparent 60%),
+    linear-gradient(180deg, rgba(120, 52, 74, 0.22), rgba(64, 28, 48, 0.1));
+}
+
+/* ===================================================================
+   Trang viết thư: phong bì (thẻ đóng), giấy, font viết tay, hiệu ứng mở thư.
+   =================================================================== */
+.letter-font-hand { font-family: var(--font-hand), "Segoe Script", cursive; }
+.letter-font-serif { font-family: Georgia, "Times New Roman", serif; }
+.letter-font-default { font-family: var(--font-ui); }
+
+.letter-paper {
+  border-radius: 14px;
+  padding: 22px 22px 26px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 14px 36px rgba(0, 0, 0, 0.3);
+}
+.letter-paper-cream { background: linear-gradient(180deg, #fff8ec, #fdeeca); color: #4a3a28; }
+.letter-paper-lined {
+  background-color: #fdf6e8;
+  background-image: repeating-linear-gradient(#fdf6e8 0 29px, rgba(150, 116, 74, 0.22) 29px 30px);
+  color: #463420;
+}
+.letter-paper-starry {
+  background: linear-gradient(160deg, #1c1742, #0c0a24);
+  color: #f3eaff;
+  box-shadow: inset 0 0 46px rgba(167, 139, 250, 0.2), 0 14px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* Tờ thư khi mở: trình bày như một bức thư thật (ngày, lời chào, thân, chữ ký) */
+.letter-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  padding: 30px 30px 32px;
+}
+.letter-sheet__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  opacity: 0.6;
+}
+.letter-sheet__mood { font-style: italic; }
+.letter-sheet__greeting {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.letter-sheet__body {
+  flex: 1 1 auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 20px;
+  line-height: 1.85;
+}
+.letter-sheet__close { margin-top: 26px; }
+.letter-sheet__signoff { font-size: 16px; opacity: 0.78; }
+.letter-sheet__sign { margin-top: 2px; text-align: right; font-size: 19px; }
+
+/* Giấy kẻ dòng: lề đỏ bên trái + canh dòng thân thư theo kẻ ngang (30px) */
+.letter-paper-lined.letter-sheet { padding-left: 50px; }
+.letter-paper-lined.letter-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 38px;
+  width: 1.5px;
+  background: rgba(214, 102, 102, 0.42);
+}
+.letter-paper-lined .letter-sheet__body {
+  font-size: 18px;
+  line-height: 30px;
+}
+
+/* Giảm chiều cao tối thiểu của tờ thư khi không có phong bì bao quanh */
+.letter-sheet { min-height: 240px; }
+
+/* Nắp tam giác phía trên tờ thư (gợi phong bì mở), không cần khung nền */
+.letter-flap {
+  width: 100%;
+  height: 46px;
+  margin-bottom: -1px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #f5e9cf, #e2cb9b);
+  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, 0.24));
+}
+
+.letter-envelope {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  padding: 58px 16px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.letter-envelope:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+}
+.letter-envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  opacity: 0.92;
+}
+.letter-envelope-rose { background: linear-gradient(135deg, #3a1730, #23122a); }
+.letter-envelope-rose::before { background: linear-gradient(135deg, #ff8ac4, #c06aa0); }
+.letter-envelope-ocean { background: linear-gradient(135deg, #102842, #0b1830); }
+.letter-envelope-ocean::before { background: linear-gradient(135deg, #5fd0e6, #3a8fb0); }
+.letter-envelope-gold { background: linear-gradient(135deg, #362b15, #241c10); }
+.letter-envelope-gold::before { background: linear-gradient(135deg, #f7d38a, #c9a24f); }
+.letter-envelope-violet { background: linear-gradient(135deg, #241546, #160e2e); }
+.letter-envelope-violet::before { background: linear-gradient(135deg, #a78bfa, #7a5cd0); }
+
+.letter-seal {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #ff9ecf, #c0397e);
+  color: #ffffff;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.letter-open {
+  animation: letterOpen 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top center;
+}
+@keyframes letterOpen {
+  from { opacity: 0; transform: perspective(900px) rotateX(-30deg) translateY(-10px); }
+  to { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .letter-open { animation: none; }
+}
+
+/* Thư mới chưa mở từ người ấy: viền sáng nhẹ + nhãn "Mới" nhấp nháy dịu */
+.letter-envelope-new {
+  box-shadow: 0 0 0 1px rgba(255, 158, 207, 0.55), 0 10px 30px rgba(255, 138, 196, 0.28);
+}
+.letter-badge-new {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #2a0f22;
+  background: linear-gradient(135deg, #ffd6ea, #ff9ecf);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: letterBadgePulse 1.8s ease-in-out infinite;
+}
+@keyframes letterBadgePulse {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .letter-badge-new { animation: none; }
+}
+
+/* ===================================================================
+   v8 — Hài hoà & bớt cứng (lớp cuối, không layer + !important nên thắng cascade)
+   Mục tiêu: bo góc gọn có cấp bậc · viền/đổ bóng dịu một lớp ·
+   nút hồng→lavender (bỏ cyan, bỏ shine sweep) · bớt glow neon.
+   =================================================================== */
+
+/* --- Bán kính CHỌN LỌC: container 12 · card/nút/field 10 · nhỏ 9 · modal 14 · pill tròn (điểm nhấn duy nhất) --- */
+.only-surface,
+.cosmic-glass,
+.ui-section { border-radius: 12px !important; }
+.only-card,
+.cosmic-card,
+.ui-card,
+.only-empty { border-radius: 10px !important; }
+.only-field { border-radius: 10px !important; }
+.only-button-primary,
+.only-button-secondary { border-radius: 8px !important; }
+.only-icon-bubble { border-radius: 9px !important; }
+.only-modal-card { border-radius: 14px !important; }
+.ui-pill { border-radius: 999px !important; }
+
+/* --- Viền dịu hơn (bớt trắng gắt 0.16 → 0.06–0.08) --- */
+.only-surface,
+.cosmic-glass,
+.ui-section { border-color: rgba(255, 255, 255, 0.08) !important; }
+.only-card,
+.cosmic-card,
+.ui-card { border-color: rgba(255, 255, 255, 0.06) !important; }
+
+/* --- Đổ bóng: một lớp tự nhiên, bỏ glow đôi neon, bớt blur --- */
+.only-surface,
+.cosmic-glass {
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(12px) saturate(108%) !important;
+}
+.only-card,
+.cosmic-card {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(8px) !important;
+}
+.only-modal-card {
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5), 0 0 26px rgba(255, 138, 196, 0.07) !important;
+}
+
+/* --- Nút chính (Hướng C): phẳng, 1 màu hồng đặc, chữ tím-than, gờ dưới như nút bấm thật. KHÔNG gradient/glow/viền sáng. --- */
+.only-button-primary {
+  border: 0 !important;
+  background: #ec8fbb !important;
+  color: #34102b !important;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: inset 0 -2px 0 rgba(120, 40, 90, 0.35) !important;
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 120ms ease !important;
+}
+.only-button-primary:hover {
+  background: #e67fb1 !important;
+  filter: none !important;
+  box-shadow: inset 0 -2px 0 rgba(120, 40, 90, 0.42) !important;
+}
+.only-button-primary:active {
+  transform: translateY(1px) !important;
+  box-shadow: inset 0 -1px 0 rgba(120, 40, 90, 0.42) !important;
+}
+.only-button-primary::after { content: none !important; }
+
+/* --- Nút phụ (Hướng C): phẳng, viền mảnh, gờ dưới, không nhấc lên --- */
+.only-button-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #f4e8f8 !important;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25) !important;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 120ms ease !important;
+}
+.only-button-secondary:hover {
+  border-color: rgba(245, 169, 203, 0.5) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.28) !important;
+}
+.only-button-secondary:active {
+  transform: translateY(1px) !important;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.28) !important;
+}
+
+/* --- Ô nhập: viền hồng nhạt + ring focus dịu --- */
+.only-field {
+  border: 1px solid rgba(240, 164, 196, 0.14) !important;
+  background: rgba(12, 11, 32, 0.48) !important;
+}
+.only-field:focus {
+  border-color: rgba(240, 164, 196, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(240, 164, 196, 0.15) !important;
+}
+
+/* --- Type: rõ cấp bậc hơn một chút --- */
+.ui-h2 { font-size: 19px !important; }
+.ui-h3 { font-size: 16px !important; }
