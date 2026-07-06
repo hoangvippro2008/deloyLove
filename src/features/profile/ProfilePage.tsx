@@ -76,7 +76,7 @@ export function ProfilePage() {
     }
 
     // Mở khung crop trước khi nhận ảnh, tránh avatar bị lệch
-    setPendingCropFile(file);
+    setPendingCropFile(file);``
   }
 
   async function saveAvatar() {

@@ -16,6 +16,7 @@ import {
   Menu,
   Music2,
   Settings,
+  ShieldCheck,
   Sparkles,
   Star,
   Trophy,
@@ -37,7 +38,6 @@ type RoomBadge = {
   theme?: string;
 };
 
-// Ưu tiên mục dùng nhiều nhất lên đầu (sau "Phòng nhỏ"): Lời nhắn, Lịch hẹn, Ảnh.
 const primaryNav = [
   { href: "/dashboard", label: "Phòng nhỏ", icon: Home },
   { href: "/letters", label: "Lời nhắn", icon: LetterText },
@@ -63,7 +63,7 @@ function isActivePath(pathname: string, href: string) {
 export function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { isGuest, logout, openAuth, user } = useAuth();
+  const { isAdmin, isGuest, logout, openAuth, user } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [fetchedRoomBadge, setFetchedRoomBadge] = useState<RoomBadge | null>(null);
   // guest thì luôn null (derive thay vì setState đồng bộ trong effect — react-hooks/set-state-in-effect)
@@ -96,6 +96,9 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   });
   const avatarSource = avatarUrl ?? fallbackAvatar;
   const roleLabel = isGuest ? "Khách" : "Thành viên";
+  const navItems = isAdmin
+    ? [...primaryNav, { href: "/admin", label: "Quản trị", icon: ShieldCheck }]
+    : primaryNav;
 
   function handleLogout() {
     logout();
@@ -125,7 +128,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   function renderNavList(onSelect?: () => void) {
     return (
       <nav className="grid gap-0.5">
-        {primaryNav.map((item) => {
+        {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActivePath(pathname, item.href);
 

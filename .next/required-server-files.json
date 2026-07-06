@@ -107,9 +107,7 @@
     "outputFileTracingRoot": "C:\\Users\\AH\\Desktop\\DoAnTotNghiep2026\\Frontend",
     "allowedDevOrigins": [
       "*.ngrok-free.app",
-      "*.ngrok.app",
-      "quynhdiem.com",
-      "www.quynhdiem.com"
+      "*.ngrok.app"
     ],
     "cacheComponents": false,
     "cacheLife": {
@@ -318,7 +316,7 @@
       "afterFiles": [
         {
           "source": "/api/:path*",
-          "destination": "https://api.quynhdiem.com/api/:path*"
+          "destination": "http://127.0.0.1:4000/api/:path*"
         }
       ],
       "fallback": []

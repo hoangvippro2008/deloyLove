@@ -50,7 +50,6 @@ export function LetterArrivalPrompt() {
           setPending(next);
         }
       } catch {
-        // im lặng nếu chưa ghép đôi (428) / lỗi mạng
       }
     };
 

@@ -30,6 +30,7 @@ type AuthContextValue = {
   authModalOpen: boolean;
   closeAuth: () => void;
   completeOnboarding: () => Promise<void>;
+  isAdmin: boolean;
   isGuest: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -154,6 +155,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       authModalOpen,
       closeAuth,
       completeOnboarding,
+      isAdmin: user?.role === "ADMIN",
       isGuest: status === "guest",
       login,
       logout,

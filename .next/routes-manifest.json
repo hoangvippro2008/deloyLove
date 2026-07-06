@@ -21,13 +21,29 @@
     "afterFiles": [
       {
         "source": "/api/:path*",
-        "destination": "https://api.quynhdiem.com/api/:path*",
+        "destination": "http://127.0.0.1:4000/api/:path*",
         "regex": "^/api(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
       }
     ],
     "fallback": []
   },
   "dynamicRoutes": [
+    {
+      "page": "/admin/rooms/[id]",
+      "regex": "^/admin/rooms/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/rooms/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/admin/users/[id]",
+      "regex": "^/admin/users/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/users/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
     {
       "page": "/quiz/[id]",
       "regex": "^/quiz/([^/]+?)(?:/)?$",
@@ -55,6 +71,54 @@
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/admin/audit",
+      "regex": "^/admin/audit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/audit(?:/)?$"
+    },
+    {
+      "page": "/admin/broadcast",
+      "regex": "^/admin/broadcast(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/broadcast(?:/)?$"
+    },
+    {
+      "page": "/admin/content",
+      "regex": "^/admin/content(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/content(?:/)?$"
+    },
+    {
+      "page": "/admin/daily-questions",
+      "regex": "^/admin/daily\\-questions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/daily\\-questions(?:/)?$"
+    },
+    {
+      "page": "/admin/rooms",
+      "regex": "^/admin/rooms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/rooms(?:/)?$"
+    },
+    {
+      "page": "/admin/settings",
+      "regex": "^/admin/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/settings(?:/)?$"
+    },
+    {
+      "page": "/admin/users",
+      "regex": "^/admin/users(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/users(?:/)?$"
     },
     {
       "page": "/album",
@@ -115,12 +179,6 @@
       "regex": "^/manifest\\.webmanifest(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/manifest\\.webmanifest(?:/)?$"
-    },
-    {
-      "page": "/map",
-      "regex": "^/map(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/map(?:/)?$"
     },
     {
       "page": "/memories",
